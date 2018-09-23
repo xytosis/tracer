@@ -36,7 +36,6 @@ public class TracerTest {
 
         @Override
         public void report(List<Trace.FinishedTrace> finishedTraces) {
-            System.out.println("got here");
             System.out.println(finishedTraces.size());
             for (Trace.FinishedTrace finishedTrace: finishedTraces) {
                 System.out.println(Duration.between(finishedTrace.getStartInstant(), finishedTrace.getEndInstant()).toMillis());
