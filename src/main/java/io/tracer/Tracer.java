@@ -10,7 +10,7 @@ public class Tracer {
     private static List<Trace.FinishedTrace> finishedTraces = new ArrayList<>();
     private static Reporter reporter;
 
-    public static TraceBuilder buildTrace(String name) {
+    public static TraceBuilder buildTrace() {
         return new TraceBuilder();
     }
 

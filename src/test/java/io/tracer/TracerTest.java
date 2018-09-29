@@ -11,7 +11,7 @@ public class TracerTest {
     @Test
     public void testTracer() throws Exception {
         Tracer.setReporter(new TestReporter());
-        Trace t = Tracer.buildTrace("hello").build();
+        Trace t = Tracer.buildTrace().build();
         t.start();
         Thread.sleep(500);
         t.mark("hey");
