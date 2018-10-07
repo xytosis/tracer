@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
 public class RemotePerformanceReporter implements Reporter {
     private HttpClient client;
     private String url;
+    private String source;
 
-    public RemotePerformanceReporter(String url) {
+    public RemotePerformanceReporter(String url, String source) {
         client = HttpClients.createDefault();
         this.url = url;
     }
@@ -59,6 +60,7 @@ public class RemotePerformanceReporter implements Reporter {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", info.getName());
         jsonObject.put("totalTime", info.getTotalTimeMillis());
+        jsonObject.put("source", this.source);
         JSONArray list = new JSONArray();
         for (TraceDuration duration: info.getDurations()) {
             JSONObject durationJSON = new JSONObject();
