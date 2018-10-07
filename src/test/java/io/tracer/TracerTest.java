@@ -11,7 +11,7 @@ public class TracerTest {
 
     @Test
     public void testTracer() throws Exception {
-        Tracer.setReporter(new RemotePerformanceReporter("http://localhost:5000"));
+        Tracer.setReporter(new RemotePerformanceReporter("http://localhost:5000", "test"));
         Trace t = Tracer.buildTrace()
                 .withName("Test trace")
                 .build();

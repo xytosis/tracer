@@ -7,8 +7,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +21,7 @@ public class RemotePerformanceReporter implements Reporter {
     public RemotePerformanceReporter(String url, String source) {
         client = HttpClients.createDefault();
         this.url = url;
+        this.source = source;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class RemotePerformanceReporter implements Reporter {
             HttpPost post = new HttpPost(this.url);
             post.addHeader("content-type", "application/json");
             post.addHeader("source", this.source);
-            StringEntity params = new StringEntity(traceInfosJSON.toJSONString());
+            StringEntity params = new StringEntity(traceInfosJSON.toString());
             post.setEntity(params);
             this.client.execute(post);
         } catch (Exception e) {
@@ -52,7 +53,7 @@ public class RemotePerformanceReporter implements Reporter {
     private JSONArray traceInfosToJSON(List<TraceInfo> infos) {
         JSONArray infosJSON = new JSONArray();
         for (TraceInfo info: infos) {
-            infosJSON.add(traceInfoToJSON(info));
+            infosJSON.put(traceInfoToJSON(info));
         }
         return infosJSON;
     }
@@ -68,7 +69,7 @@ public class RemotePerformanceReporter implements Reporter {
             durationJSON.put("duration", duration.getDuration());
             durationJSON.put("startEpoch", duration.getStart());
             durationJSON.put("endEpoch", duration.getEnd());
-            list.add(durationJSON);
+            list.put(durationJSON);
         }
         jsonObject.put("durations", list);
         return jsonObject;
