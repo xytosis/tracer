@@ -6,6 +6,8 @@ import io.tracer.TraceInfo;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.DefaultHttpRequestFactory;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +21,7 @@ public class RemotePerformanceReporter implements Reporter {
     private String source;
 
     public RemotePerformanceReporter(String url, String source) {
-        client = HttpClients.createDefault();
+        client = new DefaultHttpClient();
         this.url = url;
         this.source = source;
     }
