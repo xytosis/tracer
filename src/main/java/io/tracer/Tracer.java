@@ -10,19 +10,28 @@ public class Tracer {
     private static List<Trace.FinishedTrace> finishedTraces = new ArrayList<>();
     private static Reporter reporter;
 
-    public static TraceBuilder buildTrace() {
+    public synchronized static TraceBuilder buildTrace() {
         return new TraceBuilder();
     }
 
-    public static void setReporter(Reporter newReporter) {
+    public synchronized static void setReporter(Reporter newReporter) {
         reporter = newReporter;
     }
 
-    public static void report() {
+    public synchronized static void report() {
         reporter.report(finishedTraces);
     }
 
-    protected static void addFinishedTrace(Trace.FinishedTrace finishedTrace) {
+    public synchronized static void clearTraces() {
+        finishedTraces.clear();
+    }
+
+    public synchronized static void reportAndClearTraces() {
+        report();
+        clearTraces();
+    }
+
+    protected synchronized static void addFinishedTrace(Trace.FinishedTrace finishedTrace) {
         finishedTraces.add(finishedTrace);
     }
 
