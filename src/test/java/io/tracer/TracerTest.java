@@ -24,25 +24,4 @@ public class TracerTest {
 
         Tracer.report();
     }
-
-    private class TestReporter implements Reporter {
-
-        @Override
-        public void start() {
-
-        }
-
-        @Override
-        public void finish() {
-
-        }
-
-        @Override
-        public void report(List<Trace.FinishedTrace> finishedTraces) {
-            System.out.println(finishedTraces.size());
-            for (Trace.FinishedTrace finishedTrace: finishedTraces) {
-                System.out.println(Duration.between(finishedTrace.getStartInstant(), finishedTrace.getEndInstant()).toMillis());
-            }
-        }
-    }
 }

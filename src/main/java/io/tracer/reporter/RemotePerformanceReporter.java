@@ -1,14 +1,10 @@
 package io.tracer.reporter;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
 import io.tracer.Trace;
 import io.tracer.TraceDuration;
 import io.tracer.TraceInfo;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.DefaultHttpRequestFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,12 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RemotePerformanceReporter implements Reporter {
-    private HttpClient client;
     private String url;
     private String source;
 
     public RemotePerformanceReporter(String url, String source) {
-        client = new DefaultHttpClient();
         this.url = url;
         this.source = source;
     }
@@ -41,14 +35,13 @@ public class RemotePerformanceReporter implements Reporter {
         List<TraceInfo> infos = finishedTraces.stream().map((trace) -> new TraceInfo(trace)).collect(Collectors.toList());
         JSONArray traceInfosJSON = traceInfosToJSON(infos);
         try {
-            HttpPost post = new HttpPost(this.url);
-            post.addHeader("content-type", "application/json");
-            post.addHeader("source", this.source);
-            StringEntity params = new StringEntity(traceInfosJSON.toString());
-            post.setEntity(params);
-            this.client.execute(post);
+            HttpResponse<String> response = Unirest.post(this.url)
+                    .header("Content-Type", "application/json")
+                    .header("source", this.source)
+                    .body(traceInfosJSON.toString())
+                    .asString();
         } catch (Exception e) {
-
+            System.out.println(e.toString());
         }
     }
 
