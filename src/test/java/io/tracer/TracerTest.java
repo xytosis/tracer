@@ -1,5 +1,6 @@
 package io.tracer;
 
+import io.tracer.reporter.RemotePerformanceReporter;
 import io.tracer.reporter.Reporter;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,10 @@ public class TracerTest {
 
     @Test
     public void testTracer() throws Exception {
-        Tracer.setReporter(new TestReporter());
-        Trace t = Tracer.buildTrace().build();
+        Tracer.setReporter(new RemotePerformanceReporter("http://localhost:5000"));
+        Trace t = Tracer.buildTrace()
+                .withName("Test trace")
+                .build();
         t.start();
         Thread.sleep(500);
         t.mark("hey");

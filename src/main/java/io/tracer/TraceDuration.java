@@ -18,6 +18,14 @@ public class TraceDuration {
         return Duration.between(start, end).toMillis();
     }
 
+    public long getStart() {
+        return this.start.toEpochMilli();
+    }
+
+    public long getEnd() {
+        return this.end.toEpochMilli();
+    }
+
     public String getName() {
         return this.name;
     }

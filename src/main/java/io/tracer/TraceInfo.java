@@ -6,8 +6,10 @@ import java.util.List;
 
 public class TraceInfo {
     private List<TraceDuration> durations;
+    private String name;
 
     public TraceInfo(Trace.FinishedTrace finishedTrace) {
+        this.name = finishedTrace.getName();
         this.durations = new ArrayList<>();
         Instant start = finishedTrace.getStartInstant();
         Instant end = finishedTrace.getEndInstant();
@@ -23,12 +25,20 @@ public class TraceInfo {
         this.durations.add(new TraceDuration(marks.get(marks.size() - 1).getInstant(), end, finishedTrace.getName()));
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public String toDebugString() {
         StringBuilder builder = new StringBuilder();
         for (TraceDuration duration: this.durations) {
             builder.append(duration.getDuration()).append(",").append(duration.getName()).append("\n");
         }
         return builder.toString();
+    }
+
+    public List<TraceDuration> getDurations() {
+        return this.durations;
     }
 
     public long getTotalTimeMillis() {
