@@ -8,6 +8,7 @@ import io.tracer.TraceInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,10 @@ public class RemotePerformanceReporter implements Reporter {
 
     @Override
     public void report(List<Trace.FinishedTrace> finishedTraces) {
-        List<TraceInfo> infos = finishedTraces.stream().map((trace) -> new TraceInfo(trace)).collect(Collectors.toList());
+        List<TraceInfo> infos = new ArrayList<>();
+        for (Trace.FinishedTrace finishedTrace: finishedTraces) {
+            infos.add(new TraceInfo(finishedTrace));
+        }
         JSONArray traceInfosJSON = traceInfosToJSON(infos);
         try {
             HttpResponse<String> response = Unirest.post(this.url)
