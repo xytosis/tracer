@@ -40,6 +40,7 @@ public class RemotePerformanceReporter implements Reporter {
         try {
             HttpPost post = new HttpPost(this.url);
             post.addHeader("content-type", "application/json");
+            post.addHeader("source", this.source);
             StringEntity params = new StringEntity(traceInfosJSON.toJSONString());
             post.setEntity(params);
             this.client.execute(post);
@@ -60,7 +61,6 @@ public class RemotePerformanceReporter implements Reporter {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", info.getName());
         jsonObject.put("totalTime", info.getTotalTimeMillis());
-        jsonObject.put("source", this.source);
         JSONArray list = new JSONArray();
         for (TraceDuration duration: info.getDurations()) {
             JSONObject durationJSON = new JSONObject();
