@@ -3,6 +3,7 @@ package io.tracer;
 import io.tracer.reporter.Reporter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Tracer {
@@ -29,6 +30,10 @@ public class Tracer {
     public synchronized static void reportAndClearTraces() {
         report();
         clearTraces();
+    }
+
+    public synchronized static void reportFinishedTrace(Trace.FinishedTrace finishedTrace) {
+        reporter.report(Collections.singletonList(finishedTrace));
     }
 
     protected synchronized static void addFinishedTrace(Trace.FinishedTrace finishedTrace) {

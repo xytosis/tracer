@@ -20,8 +20,7 @@ public class TracerTest {
         t.mark("hey");
         Thread.sleep(500);
         t.mark("yo");
-        t.finish();
 
-        Tracer.report();
+        Tracer.reportFinishedTrace(t.finish());
     }
 }

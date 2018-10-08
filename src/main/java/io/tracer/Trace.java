@@ -19,9 +19,11 @@ public class Trace {
         this.startInstant = Instant.now();
     }
 
-    public void finish() {
+    public FinishedTrace finish() {
         this.endInstant = Instant.now();
-        Tracer.addFinishedTrace(new FinishedTrace(this.name, this.startInstant, this.endInstant, this.marks));
+        FinishedTrace finishedTrace = new FinishedTrace(this.name, this.startInstant, this.endInstant, this.marks);
+        Tracer.addFinishedTrace(finishedTrace);
+        return finishedTrace;
     }
 
     public void mark(String name) {
