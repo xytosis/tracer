@@ -34,8 +34,8 @@ public class RemotePerformanceReporter implements Reporter {
     public synchronized void report(List<Trace.FinishedTrace> finishedTraces) {
         System.out.println(finishedTraces.size());
         List<TraceInfo> infos = new ArrayList<>();
-        for (Trace.FinishedTrace finishedTrace: finishedTraces) {
-            infos.add(new TraceInfo(finishedTrace));
+        for (int i = 0; i < finishedTraces.size(); i++) {
+            infos.add(new TraceInfo(finishedTraces.get(i)));
         }
         JSONArray traceInfosJSON = traceInfosToJSON(infos);
         try {
