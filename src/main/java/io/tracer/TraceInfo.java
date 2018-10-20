@@ -14,6 +14,10 @@ public class TraceInfo {
         Instant start = finishedTrace.getStartInstant();
         Instant end = finishedTrace.getEndInstant();
         List<Mark> marks = finishedTrace.getMarks();
+        if (marks.isEmpty()) {
+            this.durations.add(new TraceDuration(start, end, this.name));
+            return;
+        }
         for (int i = 0; i < marks.size(); i++) {
             Mark currentMark = marks.get(i);
             if (i == 0) {
