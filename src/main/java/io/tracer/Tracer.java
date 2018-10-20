@@ -33,7 +33,7 @@ public class Tracer {
     }
 
     public synchronized static void reportFinishedTrace(Trace.FinishedTrace finishedTrace) {
-        reporter.report(Collections.singletonList(finishedTrace));
+        reporter.report(Collections.unmodifiableList(Collections.singletonList(finishedTrace)));
     }
 
     protected synchronized static void addFinishedTrace(Trace.FinishedTrace finishedTrace) {

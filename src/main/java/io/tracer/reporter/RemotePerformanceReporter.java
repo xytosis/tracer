@@ -31,7 +31,8 @@ public class RemotePerformanceReporter implements Reporter {
     }
 
     @Override
-    public void report(List<Trace.FinishedTrace> finishedTraces) {
+    public synchronized void report(List<Trace.FinishedTrace> finishedTraces) {
+        System.out.println(finishedTraces.size());
         List<TraceInfo> infos = new ArrayList<>();
         for (Trace.FinishedTrace finishedTrace: finishedTraces) {
             infos.add(new TraceInfo(finishedTrace));
